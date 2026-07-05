@@ -1,0 +1,33 @@
+Third-party licenses for binaries distributed by kint UG (haftungsbeschränkt) i.G.
+
+## github.com/AzureAD/microsoft-authentication-library-for-go
+License: MIT
+Copyright (c) Microsoft Corporation
+
+## github.com/gofrs/flock
+License: BSD-3-Clause
+Copyright (c) 2015-2020, Tim Heckman
+
+## github.com/golang-jwt/jwt/v5
+License: MIT
+Copyright (c) 2012 Dave Grijalva; 2021 golang-jwt maintainers
+
+## github.com/google/uuid
+License: BSD-3-Clause
+Copyright (c) 2009,2014 Google Inc.
+
+## github.com/kylelemons/godebug
+License: Apache-2.0
+Copyright 2013 Google Inc.
+
+## github.com/pkg/browser
+License: BSD-2-Clause
+Copyright (c) 2014, Dave Cheney
+
+## golang.org/x/sys
+License: BSD-3-Clause
+Copyright 2009 The Go Authors
+
+Full license texts: https://spdx.org/licenses/ — copies ship in each module's
+source repository. This file satisfies the attribution requirements of the
+MIT/BSD/Apache-2.0 licenses for binary distribution.
