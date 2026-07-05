@@ -6,7 +6,7 @@ $InstallDir = "$env:LOCALAPPDATA\kint-data"
 
 $Arch = if ([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture -eq "Arm64") { "arm64" } else { "amd64" }
 
-$Release = Invoke-RestMethod "https://api.github.com/repos/$Repo/releases/latest"
+$Release = Invoke-RestMethod "https://api.github.com/repos/$Repo/releases/latest" -UseBasicParsing
 $Version = $Release.tag_name.TrimStart("v")
 
 $Url = "https://github.com/$Repo/releases/download/v$Version/kint-data-cli_${Version}_windows_${Arch}.zip"
@@ -16,10 +16,11 @@ New-Item -ItemType Directory -Force -Path $Tmp | Out-Null
 New-Item -ItemType Directory -Force -Path $InstallDir | Out-Null
 
 Write-Host "Downloading kint-data v$Version (windows/$Arch)..."
-Invoke-WebRequest $Url -OutFile "$Tmp\kint-data.zip"
+Invoke-WebRequest $Url -OutFile "$Tmp\kint-data.zip" -UseBasicParsing
 
 $ChecksumUrl = "https://github.com/$Repo/releases/download/v$Version/checksums.txt"
-$Checksums = (Invoke-WebRequest $ChecksumUrl).Content
+$ChecksumResponse = (Invoke-WebRequest $ChecksumUrl -UseBasicParsing).Content
+$Checksums = if ($ChecksumResponse -is [byte[]]) { [Text.Encoding]::UTF8.GetString($ChecksumResponse) } else { $ChecksumResponse }
 $ArchiveName = "kint-data-cli_${Version}_windows_${Arch}.zip"
 $Expected = ($Checksums -split "`n" | Where-Object { $_ -match [regex]::Escape($ArchiveName) }) -split '\s+' | Select-Object -First 1
 $Actual = (Get-FileHash "$Tmp\kint-data.zip" -Algorithm SHA256).Hash.ToLower()
